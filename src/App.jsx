@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.less';
 import NameForm from './Components/NameForm.jsx';
 import Reservation from './Components/Reservation.jsx';
+import Calculator from './Components/Calculator.jsx';
 
 const Element = () => {
   return <div className="App">
@@ -142,6 +143,8 @@ class App extends Component {
 
         <NameForm/>
         <Reservation/>
+
+        <Calculator/>
       </div>
     </div>
   }
