@@ -39,14 +39,10 @@ class TemperatureInput extends Component {
   render() {
     const temperature = this.props.temperature;
     const scale = this.props.scale;
-    const celsius = scale == 'f'
-      ? tryConvert(temperature, toCelsius)
-      : temperature;
     return (
       <fieldset className="margin-top-20 margin-bottom-20">
         <legend>请输入一个{scaleName[scale]}温度</legend>
         <input type="number" value={temperature} onChange ={this.handleChange}/>
-        <BoilingVerdict celsius={celsius}/>
       </fieldset>
     );
   }
@@ -81,10 +77,10 @@ class Calculator extends Component {
     const scale = this.state.scale;
     const temperature = this.state.temperature;
 
-    const celsius = scale == 'f'
+    const celsius = scale === 'f'
       ? tryConvert(temperature, toCelsius)
       : temperature;
-    const fahrenheit = scale == 'c'
+    const fahrenheit = scale === 'c'
       ? tryConvert(temperature, toFahrenheit)
       : temperature;
 
@@ -99,6 +95,8 @@ class Calculator extends Component {
           scale="f"
           temperature={fahrenheit}
           onTemperatureChange={this.handleFahrenheitChange}/>
+
+        <BoilingVerdict celsius={celsius}/>
       </div>
     )
   }

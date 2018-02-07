@@ -4,6 +4,7 @@ import './App.less';
 import NameForm from './Components/NameForm.jsx';
 import Reservation from './Components/Reservation.jsx';
 import Calculator from './Components/Calculator.jsx';
+import WelcomeDialog from './Components/WelcomeDialog.jsx';
 
 const Element = () => {
   return <div className="App">
@@ -145,6 +146,8 @@ class App extends Component {
         <Reservation/>
 
         <Calculator/>
+
+        <WelcomeDialog/>
       </div>
     </div>
   }
