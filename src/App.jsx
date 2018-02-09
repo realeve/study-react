@@ -68,6 +68,93 @@ const MessageList = props => <ul style={{
     .map(item => <ListItem key={item} value={item}/>)
 }</ul>
 
+function Repeat(props) {
+  let items = [];
+  for (let i = 0; i < props.numTimes; i++) {
+    items.push(props.children(i));
+  }
+  return <div>{items}</div>;
+}
+
+function ListOfTenThings() {
+  return (
+    <Repeat numTimes={10}>
+      {(index) => <div key={index}>This is item {index}
+        in the list</div>}
+    </Repeat>
+  );
+}
+
+class CounterButton extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 1
+    };
+  }
+  render() {
+    return (
+      <button
+        color={this.props.color}
+        onClick={() => this.setState(state => ({
+        count: state.count + 1
+      }))}>
+        Count: {this.state.count}
+      </button>
+    );
+  }
+}
+
+const tableData = {
+  header: [
+    '编号', '姓名', '年龄'
+  ],
+  data: [
+    [
+      1, 'zhangsan', 21
+    ],
+    [
+      2, '李四', 32
+    ],
+    [3, '王五', 24]
+  ]
+}
+
+const RThead = props => {
+  return <thead>
+    <tr>
+      {props
+        .header
+        .map(item => <th key={item}>{item}</th>)}
+    </tr>
+  </thead>;
+};
+
+const RTr = props => {
+  return <tr>
+    {props
+      .tr
+      .map(td => <td key={td}>{td}</td>)}
+  </tr>
+}
+
+const RTbody = props => {
+  return <tbody>
+    {props
+      .data
+      .map(tr => {
+        return <RTr tr={tr} key={tr[0]}/>
+      })}
+  </tbody>
+}
+
+const RTable = () => {
+  return <table>
+    <RThead header={tableData.header}></RThead>
+    <RTbody data={tableData.data}></RTbody>
+  </table>
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -93,11 +180,17 @@ class App extends Component {
     this.setState({date: new Date()});
   }
 
+  componentWillMount() {
+    console.log('APP组件准备开始加载')
+  }
+
   componentDidMount() {
+    console.log('APP组件加载完毕')
     this.timerID = setInterval(() => this.updateDate(), 1000)
   }
 
   componentWillUnmount() {
+    console.log('APP组件卸载')
     clearInterval(this.timerID);
   }
 
@@ -116,7 +209,9 @@ class App extends Component {
   render() {
     return <div>
       <Element/>
-      <div className="content">
+      <div className="content" style={{
+        marginBottom: '40px'
+      }}>
         <Welcome name="world"/>
         <Clock date={this.state.date}/>
         <Greeting isLogin={this.state.isLogin}/>
@@ -148,6 +243,11 @@ class App extends Component {
         <Calculator/>
 
         <WelcomeDialog/>
+        <ListOfTenThings/>
+
+        <CounterButton color="red"/>
+
+        <RTable/>
       </div>
     </div>
   }
